@@ -1,7 +1,4 @@
-Example
-===========
-
-What does this block do?
+PID Controller
 
 Properties
 --------------
