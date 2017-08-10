@@ -8,12 +8,18 @@ class TestPID(NIOBlockTestCase):
 
     def test_process_signals(self):
         """Signals pass through block unmodified."""
-        blk = Example()
-        self.configure_block(blk, {})
+        blk = PID()
+        self.configure_block(blk, {
+                                   'kp' : "{{ $kp }}",
+                                   'ki' : "{{ $ki }}",
+                                   'kd' : "{{ $kd }}",
+                                   'setpoint' : "{{ $setpoint }}",
+                                   'current_value' : "{{ $current_value }}"
+        })
         blk.start()
-        blk.process_signals([Signal({"hello": "n.io"})])
+        blk.process_signals([Signal()])
         blk.stop()
         self.assert_num_signals_notified(1)
         self.assertDictEqual(
-            self.last_notified[DEFAULT_TERMINAL][0].to_dict(),
-            {"hello": "n.io"})
+            {"PID": 2},
+            self.last_notified[DEFAULT_TERMINAL][0].to_dict())
