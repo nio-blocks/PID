@@ -1,5 +1,5 @@
 from nio.block.base import Block
-from nio.properties import VersionProperty, IntProperty
+from nio.properties import VersionProperty, Property, FloatProperty
 from nio.signal.base import Signal
 
 
@@ -7,21 +7,53 @@ from nio.signal.base import Signal
 class PID(Block):
 
     version = VersionProperty('0.1.0')
-    kp = IntProperty(title = "Proportional Gain", default = 0)
-    # ki = IntProperty(title = "Integral Gain", default = 0)
-    # kd = IntProperty(title = "Derivative Gain", default = 0)
-    setpoint = IntProperty(title = "Setpoint", default = 0)
-    current_value = IntProperty(title = 'Attribute to Control', default = 0)
-    # integral_error = 0
-    # derivative_error = 0
-    # previous_error = 0
+    Kp = FloatProperty(title="P", default=2.0)
+    Ki = FloatProperty(title="I", default=0)
+    Kd = FloatProperty(title="D", default=1.0)
+    # Derivator = FloatProperty(title="Derivator", default=0)
+    # Integrator = FloatProperty(title="Integrator", default=0)
+    Integrator_max = FloatProperty(title="Integrator_max", default=500, visible=False)
+    Integrator_min = FloatProperty(title="Integrator_min", default=-500, visible=False)
+    current_value = Property(title='Current Value', default='')
+    set_point = FloatProperty(title="Set Point", default=0)
+
+
+    def __init__(self):
+        super().__init__()
+        self.Derivator = 0
+        self.Integrator = 0
+        self.Integrator_max = self.Integrator_max()
+        self.Integrator_min = self.Integrator_min()
+        self.error=0.0
+
 
     def process_signals(self, signals):
+        new_signals = []
         for signal in signals:
-            self.error = self.setpoint() - self.current_value()
-            #self.integral_error =+ self.error
-            #self.derivative_error = self.error - self.previous_error
-            PID = self.kp * self.error
-            #self.previous_error = self.error
+            value = self._update(self.current_value(signal))
+            new_signals.append(Signal({'value' : value}))
+        self.notify_signals(new_signals)
 
-            self.notify_signals([ Signal( {"PID" : PID} )])
+
+    def _update(self,current_value):
+        """
+        Calculate PID output value for given reference input and feedback
+        """
+
+        self.error = self.set_point() - current_value
+        self.P_value = self.Kp * self.error
+        self.D_value = self.Kd * ( self.error - self.Derivator)
+        self.Derivator = self.error
+
+        self.Integrator = self.Integrator + self.error
+
+        if self.Integrator > self.Integrator_max:
+            self.Integrator = self.Integrator_max
+        elif self.Integrator < self.Integrator_min:
+            self.Integrator = self.Integrator_min
+
+        self.I_value = self.Integrator * self.Ki
+
+        PID = self.P_value + self.I_value + self.D_value
+
+        return PID
