@@ -1,4 +1,4 @@
-PID Controller
+Discretized PID Controller
 
 Properties
 --------------
