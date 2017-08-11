@@ -1,8 +1,17 @@
-Discretized PID Controller
+Discretized PID Controller 
 
 Properties
 --------------
-None
+Measured Value : Signal to be controlled, compared with Set Point.
+
+Set Point : Value that Measured Value should be.
+
+Propertional Gain : Float, Proprtional Gain of the Controller (kp)
+
+Integral Gain : Float, Integral Gain of the Controller (ki)
+
+Derivative Gain : Float, Derivative Gain of the Controller (kd)
+
 
 Dependencies
 ----------------
@@ -14,8 +23,8 @@ None
 
 Input
 -------
-Any list of signals.
+A list of signals containing a signal to be measured and controlled.
 
 Output
 ---------
-Same list of signals as input.
+value : Calculated control from the PID controller.
