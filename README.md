@@ -2,7 +2,7 @@ Discretized PID Controller
 
 Properties
 --------------
-Measured Value : Signal to be controlled, compared with Set Point.
+Process Variable : Signal to be controlled, compared with Set Point.
 
 Set Point : Value that Measured Value should be.
 
@@ -23,7 +23,7 @@ None
 
 Input
 -------
-A list of signals containing a signal to be measured and controlled.
+A list of signals containing a Process Variable.
 
 Output
 ---------
