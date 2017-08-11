@@ -1,7 +1,7 @@
 from nio.block.base import Block
 from nio.properties import VersionProperty, Property, FloatProperty
 from nio.signal.base import Signal
-
+import datetime
 
 
 class PID(Block):
@@ -22,8 +22,12 @@ class PID(Block):
         self.Integrator = 0
         self.Integrator_max = self.Integrator_max()
         self.Integrator_min = self.Integrator_min()
-        self.error=0.0
+        self.error = 0.0
+        self.last_time = None
 
+    def start(self):
+        super().start()
+        self.last_time = datetime.datetime.utcnow()
 
     def process_signals(self, signals):
         new_signals = []
@@ -33,18 +37,16 @@ class PID(Block):
         self.notify_signals(new_signals)
 
 
-    def _update(self, current_value):
-        """
-        Calculate PID output value for given reference input and feedback
-        """
-
+    def _update(self, current_value, current_time=datetime.datetime.utcnow()):
+        """Calculate PID output value for given reference input and feedback"""
+        dt = (current_time - self.last_time).total_seconds()
         self.error = self.set_point() - current_value
         self.P_value = self.Kp() * self.error
-        self.D_value = self.Kd() * (self.error - self.Derivator)
+        self.D_value = self.Kd() * (self.error - self.Derivator) / dt
 
         self.Derivator = self.error
-        self.Integrator = self.Integrator + self.error
-
+        self.Integrator = self.Integrator + self.error * dt
+        self.last_time = datetime.datetime.utcnow()
         if self.Integrator > self.Integrator_max():
             self.Integrator = self.Integrator_max()
         elif self.Integrator < self.Integrator_min():
