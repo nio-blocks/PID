@@ -7,12 +7,12 @@ from nio.signal.base import Signal
 class PID(Block):
 
     version = VersionProperty('0.1.0')
-    Kp = FloatProperty(title="P", default=2.0)
-    Ki = FloatProperty(title="I", default=0)
-    Kd = FloatProperty(title="D", default=1.0)
+    Kp = FloatProperty(title="Proportional Gain", default=0)
+    Ki = FloatProperty(title="Integral Gain", default=0)
+    Kd = FloatProperty(title="Derivative Gain", default=0)
     Integrator_max = FloatProperty(title="Integrator_max", default=500, visible=False)
     Integrator_min = FloatProperty(title="Integrator_min", default=-500, visible=False)
-    current_value = Property(title='Current Value', default=0)
+    current_value = Property(title='Measured Value', default=0)
     set_point = FloatProperty(title='Set Point', default=0)
 
 
