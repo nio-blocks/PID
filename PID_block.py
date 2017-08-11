@@ -1,26 +1,4 @@
-    self.error = 0.0
-        self.last_time = None
-
-    def start(self):
-        super().start()
-        self.last_time = datetime.datetime.utcnow()
-
-    def process_signals(self, signals):
-        new_signals = []
-        for signal in signals:
-            value = self._update(self.current_value(signal))
-            new_signals.append(Signal({'value' : value}))
-        self.notify_signals(new_signals)
-
-
-    def _update(self, current_value, current_time=datetime.datetime.utcnow()):
-        """Calculate PID output value for given reference input and feedback"""
-        dt = (current_time - self.last_time).total_seconds()
-        self.error = self.set_point() - current_value
-        self.P_value = self.Kp() * self.error
-        self.D_value = self.Kd() * (self.error - self.Derivator) / dt
-
-        self.Derivator = self.errorfrom nio.block.base import Block
+from nio.block.base import Block
 from nio.properties import VersionProperty, Property, FloatProperty
 from nio.signal.base import Signal
 import datetime
