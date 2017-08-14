@@ -10,7 +10,7 @@ class TestPID(NIOBlockTestCase):
     def test_process_signals(self):
         """Signals pass through block unmodified."""
         value = {'clear' : ANY}
-        
+
         blk = PID()
         self.configure_block(blk, {})
         blk.start()
