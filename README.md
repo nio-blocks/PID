@@ -27,4 +27,4 @@ A list of signals containing a Process Variable.
 
 Output
 ---------
-value : Calculated control from the PID controller.
+value : Float, Calculated control output from the PID controller.
