@@ -12,7 +12,7 @@ class PID(Block):
     Kd = FloatProperty(title="Derivative Gain", default=0)
     Integrator_max = FloatProperty(title="Integrator_max", default=500, visible=False)
     Integrator_min = FloatProperty(title="Integrator_min", default=-500, visible=False)
-    current_value = Property(title='Measured Value', default=0)
+    current_value = Property(title='Process Variable', default=0)
     set_point = FloatProperty(title='Set Point', default=0)
 
 
