@@ -1,6 +1,6 @@
 PID
 ===
-A NIO Block that creates a discretized PID Controlled output from a list of incoming signals.
+A NIO Block that creates a discretized [PID](https://en.wikipedia.org/wiki/PID_controller) Controlled output from a list of incoming signals.
 
 Properties
 ----------
@@ -9,7 +9,7 @@ Properties
 - **Propertional Gain** : Float, Proprtional Gain of the Controller (kp)
 - **Integral Gain** : Float, Integral Gain of the Controller (ki)
 - **Derivative Gain** : Float, Derivative Gain of the Controller (kd)
-- **Integrator Max** : Float, Maximum Integrator to be applied to prevent Integral Windup
+- **Integrator Max** : Float, Maximum Integrator to be applied to prevent [Integral Windup](https://en.wikipedia.org/wiki/Integral_windup)
 - **Integrator Min** : Float, Minimum Integrator to be applied to prevent Integral Windup
 
 Input
