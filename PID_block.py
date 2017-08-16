@@ -37,27 +37,29 @@ class PID(Block):
     def process_signals(self, signals):
         new_signals = []
         for signal in signals:
-            value = self._update(self.process_config().current_value(signal))
-            new_signals.append(Signal({'value' : value}))
+            dt = (datetime.datetime.utcnow() - self.last_time).total_seconds()
+            self.logger.debug('dt {}'.format(dt))
+
+            """Calculation for Proportional Gain"""
+            self.error = self.process_config().set_point(signal) - \
+                         self.process_config().current_value(signal)
+            self.logger.debug('error {}'.format(self.error))
+            self.P_value = self.gain_config().Kp(signal) * self.error
+
+            """Calculation for Derivative Gain, Derivator==Previous Error"""
+            self.D_value = \
+                    self.gain_config().Kd(signal) * \
+                    (self.error - self.Derivator) / dt
+            self.Derivator = self.error
+            self.logger.debug('Derivator {}'.format(self.Derivator))
+
+            """Calcualation for Integral Gain, Integrator==Sum of all Errors"""
+            self.Integrator = self.Integrator + self.error * dt
+            self.logger.debug('Integrator {}'.format(self.Integrator))
+            self.last_time = datetime.datetime.utcnow()
+            self.I_value = self.Integrator * self.gain_config().Ki(signal)
+
+            """Final Math Addition of all terms"""
+            PID = self.P_value + self.I_value + self.D_value
+            new_signals.append(Signal({'value' : PID}))
         self.notify_signals(new_signals)
-
-
-    def _update(self, current_value):
-        """Calculate PID output for process variable at timestamp"""
-        dt = (datetime.datetime.utcnow() - self.last_time).total_seconds()
-        self.logger.debug('dt {}'.format(dt))
-        self.error = self.process_config().set_point() - current_value
-        self.logger.debug('error {}'.format(self.error))
-        self.P_value = self.gain_config().Kp() * self.error
-        self.D_value = \
-                self.gain_config().Kd() * (self.error - self.Derivator) / dt
-        self.Derivator = self.error
-        self.logger.debug('Derivator {}'.format(self.Derivator))
-        self.Integrator = self.Integrator + self.error * dt
-        self.logger.debug('Integrator {}'.format(self.Integrator))
-        self.last_time = datetime.datetime.utcnow()
-        self.I_value = self.Integrator * self.gain_config().Ki()
-
-        PID = self.P_value + self.I_value + self.D_value
-
-        return PID
