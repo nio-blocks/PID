@@ -29,26 +29,36 @@ class TestPID(NIOBlockTestCase):
         kp = 1
         ki = 1
         kd = 1
+        imax = 20
+        imin = 19
         self.configure_block(blk, {'process_config' :
                                         {'set_point' : '{{$sp}}',
                                          'current_value' : '{{$value}}'},
                                    'gain_config' :
                                         {'Kp' : '{{$Kp}}',
                                          'Ki' : '{{$Ki}}',
-                                         'Kd' : '{{$Kd}}'
+                                         'Kd' : '{{$Kd}}',
+                                         'Integrator_max' : '{{$imax}}',
+                                         'Integrator_min' : '{{$imin}}'
         } })
         blk.start()
         blk.process_signals([Signal({'value' : pv,
                                      'sp' : setp,
                                      'Kp' : kp,
                                      'Ki' : ki,
-                                     'Kd' : kd}),
+                                     'Kd' : kd,
+                                     'imax' : imax,
+                                     'imin' : imin
+        }),
                              Signal({'value' : pv,
                                      'sp' : setp,
                                      'Kp' : kp,
                                      'Ki' : ki,
-                                     'Kd' : kd
+                                     'Kd' : kd,
+                                     'imax' : imax,
+                                     'imin' : imin
         })] )
+        
         # block.process_signals([Signal({'test_count': 1})])
         blk.stop()
         self.assert_num_signals_notified(2)
