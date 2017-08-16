@@ -24,7 +24,7 @@ class TestPID(NIOBlockTestCase):
     def test_config_signal(self):
 
         blk = PID()
-        pv = 5
+        pv = 9
         setp = 10
         kp = 1
         ki = 1
@@ -42,8 +42,8 @@ class TestPID(NIOBlockTestCase):
                                      'sp' : setp,
                                      'Kp' : kp,
                                      'Ki' : ki,
-                                     'Kd' : kd
-        }),Signal({'value' : pv,
+                                     'Kd' : kd}),
+                             Signal({'value' : pv,
                                      'sp' : setp,
                                      'Kp' : kp,
                                      'Ki' : ki,
