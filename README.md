@@ -1,4 +1,4 @@
-Discretized PID Controller 
+Discretized PID Controller
 ==========================
 
 Properties
@@ -12,6 +12,10 @@ Propertional Gain : Float, Proprtional Gain of the Controller (kp)
 Integral Gain : Float, Integral Gain of the Controller (ki)
 
 Derivative Gain : Float, Derivative Gain of the Controller (kd)
+
+Integrator Max : Float, Maximum Integrator to be applied to prevent Integral Windup
+
+Integrator Min : Float, Minimum Integrator to be applied to prevent Integral Windup
 
 
 Dependencies
