@@ -9,16 +9,16 @@ class TestPID(NIOBlockTestCase):
 
     def test_hardcoded(self):
         blk = PID()
-        self.configure_block(blk, {'process_config' :
-                                        {'set_point' : 10, 'current_value' : 5},
-                                   'gain_config' :
-                                        {'Kp' : 1, 'Ki' : 0, 'Kd' : 0}})
+        self.configure_block(blk, {'process_config':
+                                        {'set_point': 10, 'current_value': 5},
+                                   'gain_config':
+                                        {'Kp': 1, 'Ki': 0, 'Kd': 0}})
         blk.start()
         blk.process_signals([Signal()])
         blk.stop()
         self.assert_num_signals_notified(1)
         self.assertDictEqual(
-            {'value' : 5},
+            {'value': 5},
             self.last_notified[DEFAULT_TERMINAL][0].to_dict())
 
     def test_config_signal(self):
@@ -31,41 +31,37 @@ class TestPID(NIOBlockTestCase):
         kd = 1
         imax = 20
         imin = 19
-        self.configure_block(blk, {'process_config' :
-                                        {'set_point' : '{{$sp}}',
-                                         'current_value' : '{{$value}}'},
-                                   'gain_config' :
-                                        {'Kp' : '{{$Kp}}',
-                                         'Ki' : '{{$Ki}}',
-                                         'Kd' : '{{$Kd}}',
-                                         'Integrator_max' : '{{$imax}}',
-                                         'Integrator_min' : '{{$imin}}'
-        } })
+        self.configure_block(blk, {'process_config':
+                                        {'set_point': '{{$sp}}',
+                                         'current_value': '{{$value}}'},
+                                   'gain_config':
+                                        {'Kp': '{{$Kp}}',
+                                         'Ki': '{{$Ki}}',
+                                         'Kd': '{{$Kd}}',
+                                         'Integrator_max': '{{$imax}}',
+                                         'Integrator_min': '{{$imin}}'
+                                         }})
         blk.start()
-        blk.process_signals([Signal({'value' : pv,
-                                     'sp' : setp,
-                                     'Kp' : kp,
-                                     'Ki' : ki,
-                                     'Kd' : kd,
-                                     'imax' : imax,
-                                     'imin' : imin
-        }),
-                             Signal({'value' : pv,
-                                     'sp' : setp,
-                                     'Kp' : kp,
-                                     'Ki' : ki,
-                                     'Kd' : kd,
-                                     'imax' : imax,
-                                     'imin' : imin
-        })] )
-        
-        # block.process_signals([Signal({'test_count': 1})])
+        blk.process_signals([Signal({'value': pv,
+                                     'sp': setp,
+                                     'Kp': kp,
+                                     'Ki': ki,
+                                     'Kd': kd,
+                                     'imax': imax,
+                                     'imin': imin
+                                     }),
+                             Signal({'value': pv,
+                                     'sp': setp,
+                                     'Kp': kp,
+                                     'Ki': ki,
+                                     'Kd': kd,
+                                     'imax': imax,
+                                     'imin': imin
+                                     })])
+
         blk.stop()
         self.assert_num_signals_notified(2)
         print([n.to_dict() for n in self.last_notified[DEFAULT_TERMINAL]])
         self.assertFalse(
-            self.last_notified[DEFAULT_TERMINAL][0].to_dict()==\
+            self.last_notified[DEFAULT_TERMINAL][0].to_dict() ==
             self.last_notified[DEFAULT_TERMINAL][1].to_dict())
-        # self.assertDictEqual(
-            # {'value' : ANY},
-            # self.last_notified[DEFAULT_TERMINAL][0].to_dict())

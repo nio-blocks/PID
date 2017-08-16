@@ -19,6 +19,7 @@ class GainConfig(PropertyHolder):
     Integrator_min = FloatProperty(title="Minimum Integrator",
                                    default=None, allow_none=True)
 
+
 class PID(Block):
 
     version = VersionProperty('0.1.0')
@@ -29,61 +30,56 @@ class PID(Block):
 
     def __init__(self):
         super().__init__()
+        self.error = 0
         self.Derivator = 0
-        self.Integrator = 0
-        self.error = 0.0
-        self.last_time = None
-        self.I_value = 0
         self.D_value = 0
+        self.Integrator = 0
+        self.I_value = 0
+        self.last_time = None
 
     def start(self):
         super().start()
-        # self.last_time = datetime.datetime.utcnow()
 
     def process_signals(self, signals):
         new_signals = []
         for signal in signals:
 
-            #Calculation for Proportional Gain, Error==SP-ProcessVariable
+            # Calculation for Proportional Gain, Error==SP-ProcessVariable
             self.error = self.process_config().set_point(signal) - \
                          self.process_config().current_value(signal)
             self.logger.debug('error {}'.format(self.error))
-            print('error {}'.format(self.error))
             self.P_value = self.gain_config().Kp(signal) * self.error
 
-            #First signal has no dt so:
+            # First signal has dt==0 so:
             if self.last_time:
-                #Find time for Integral and Derivator error Calculations
-                dt = (datetime.datetime.utcnow() - self.last_time).total_seconds()
-                print('dt {}'.format(dt))
+                # Find time for Integral and Derivator error Calculations
+                dt = (datetime.datetime.utcnow()-self.last_time).total_seconds()
                 self.logger.debug('dt {}'.format(dt))
 
-                #Calculation for Derivative Gain, Derivator==Previous Error
+                # Calculation for Derivative Gain, Derivator==Previous Error
                 self.D_value = self.gain_config().Kd(signal) * \
-                              (self.error - self.Derivator) / dt
+                    (self.error - self.Derivator) / dt
                 self.Derivator = self.error
                 self.logger.debug('Derivator {}'.format(self.Derivator))
-                print('Derivator {}'.format(self.Derivator))
-                print('D {}'.format(self.D_value))
 
-                #Calcualation for Integral Gain, Integrator==Sum of all Errors
+                # Calcualation for Integral Gain, Integrator==Sum of all Errors
                 self.Integrator = self.Integrator + self.error * dt
 
-                #Max and Min Integrator to Prevent Integral Windup
+                # Max and Min Integrator to Prevent Integral Windup
                 if self.gain_config().Integrator_max(signal):
-                    self.Integrator = min(self.Integrator, \
-                                          self.gain_config().Integrator_max(signal))
+                    self.Integrator = min(self.Integrator,
+                                      self.gain_config().Integrator_max(signal))
                 if self.gain_config().Integrator_min(signal):
-                    self.Integrator = max(self.Integrator, \
-                                          self.gain_config().Integrator_min(signal))
+                    self.Integrator = max(self.Integrator,
+                                      self.gain_config().Integrator_min(signal))
 
                 self.logger.debug('Integrator {}'.format(self.Integrator))
-                print('Integrator {}'.format(self.Integrator))
                 self.I_value = self.Integrator * self.gain_config().Ki(signal)
-                print('I {}'.format(self.I_value))
-            self.last_time = datetime.datetime.utcnow()
+                self.last_time = dt
+            else:
+                self.last_time = datetime.datetime.utcnow()
 
-            #Final Math Addition of all terms
+            # Final Math: Addition of all terms
             PID = self.P_value + self.I_value + self.D_value
-            new_signals.append(Signal({'value' : PID}))
+            new_signals.append(Signal({'value': PID}))
         self.notify_signals(new_signals)
