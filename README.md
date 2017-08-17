@@ -5,7 +5,7 @@ Properties
 --------------
 Process Variable : Signal to be controlled, compared with Set Point.
 
-Set Point : Value that Measured Value should be.
+Set Point : Value to compare with Process Variable.
 
 Propertional Gain : Float, Proprtional Gain of the Controller (kp)
 
