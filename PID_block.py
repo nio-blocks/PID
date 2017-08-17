@@ -76,7 +76,8 @@ class PID(Block):
                 self.logger.debug('Integrator {}'.format(self.Integrator))
                 self.I_value = self.Integrator * self.gain_config().Ki(signal)
                 self.logger.debug('LastTime {}'.format(self.last_time))
-            
+
+            # Need for dt calculation
             self.last_time = datetime.datetime.utcnow()
 
             # Final Math: Addition of all terms
