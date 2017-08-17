@@ -14,9 +14,9 @@ class GainConfig(PropertyHolder):
     Kp = FloatProperty(title="Proportional Gain", default=0)
     Ki = FloatProperty(title="Integral Gain", default=0)
     Kd = FloatProperty(title="Derivative Gain", default=0)
-    Integrator_max = FloatProperty(title="Maximum Integrator",
+    Integrator_max = Property(title="Maximum Integrator",
                                    default=None, allow_none=True)
-    Integrator_min = FloatProperty(title="Minimum Integrator",
+    Integrator_min = Property(title="Minimum Integrator",
                                    default=None, allow_none=True)
 
 
@@ -68,10 +68,10 @@ class PID(Block):
                 # Max and Min Integrator to Prevent Integral Windup
                 if self.gain_config().Integrator_max(signal):
                     self.Integrator = min(self.Integrator,
-                                      self.gain_config().Integrator_max(signal))
+                                     float( self.gain_config().Integrator_max(signal)))
                 if self.gain_config().Integrator_min(signal):
                     self.Integrator = max(self.Integrator,
-                                      self.gain_config().Integrator_min(signal))
+                                     float(self.gain_config().Integrator_min(signal)))
 
                 self.logger.debug('Integrator {}'.format(self.Integrator))
                 self.I_value = self.Integrator * self.gain_config().Ki(signal)
