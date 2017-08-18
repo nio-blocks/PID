@@ -8,7 +8,7 @@ import datetime
 class ProcessConfig(PropertyHolder):
     current_value = FloatProperty(title="Process Variable", default=0)
     set_point = FloatProperty(title="Set Point", default=0)
-    annotation = StringProperty(title="Annotation", default='')
+
 
 
 class GainConfig(PropertyHolder):
@@ -28,6 +28,7 @@ class PID(Block):
         ProcessConfig, title="Process Variable Setup", default=ProcessConfig())
     gain_config = ObjectProperty(
         GainConfig, title="Gain Values", default=GainConfig())
+    annotation = StringProperty(title="Notes", default='')
 
     def __init__(self):
         super().__init__()
