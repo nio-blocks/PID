@@ -7,54 +7,54 @@ from PID_block import PID
 
 class TestPID(NIOBlockTestCase):
 
-    def test_hardcoded(self):
+    def test_onesignal_ponly(self):
         blk = PID()
         self.configure_block(blk, {'process_config':
-                                        {'set_point': 10, 'current_value': 5},
+                                        {'set_point': 9, 'current_value': 5},
                                    'gain_config':
-                                        {'Kp': 1, 'Ki': 0, 'Kd': 0}})
+                                        {'kp': 1, 'ki': 2, 'kd': 3}})
         blk.start()
         blk.process_signals([Signal()])
         blk.stop()
         self.assert_num_signals_notified(1)
         self.assertDictEqual(
-            {'value': 5},
+            {'value': 4},
             self.last_notified[DEFAULT_TERMINAL][0].to_dict())
 
     def test_config_signal(self):
 
         blk = PID()
-        pv = 9
+        pv = 1000000
         setp = 10
         kp = 1
-        ki = 1
-        kd = 1
-        imax = 20
-        imin = 19
+        ki = 2
+        kd = 3
+        imax = -150
+        imin = None
         self.configure_block(blk, {'process_config':
                                         {'set_point': '{{$sp}}',
                                          'current_value': '{{$value}}'},
                                    'gain_config':
-                                        {'Kp': '{{$Kp}}',
-                                         'Ki': '{{$Ki}}',
-                                         'Kd': '{{$Kd}}',
-                                         'Integrator_max': '{{$imax}}',
-                                         'Integrator_min': '{{$imin}}'
+                                        {'kp': '{{$kp}}',
+                                         'ki': '{{$ki}}',
+                                         'kd': '{{$kd}}',
+                                         'integrator_max': '{{$imax}}',
+                                         'integrator_min': '{{$imin}}'
                                          }})
         blk.start()
         blk.process_signals([Signal({'value': pv,
                                      'sp': setp,
-                                     'Kp': kp,
-                                     'Ki': ki,
-                                     'Kd': kd,
+                                     'kp': kp,
+                                     'ki': ki,
+                                     'kd': kd,
                                      'imax': imax,
                                      'imin': imin
                                      }),
                              Signal({'value': pv,
                                      'sp': setp,
-                                     'Kp': kp,
-                                     'Ki': ki,
-                                     'Kd': kd,
+                                     'kp': kp,
+                                     'ki': ki,
+                                     'kd': kd,
                                      'imax': imax,
                                      'imin': imin
                                      })])
