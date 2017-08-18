@@ -1,6 +1,6 @@
 from nio.block.base import Block
 from nio.properties import VersionProperty, Property, FloatProperty, \
-                           PropertyHolder, ObjectProperty
+                           PropertyHolder, ObjectProperty, StringProperty
 from nio.signal.base import Signal
 import datetime
 
@@ -8,6 +8,7 @@ import datetime
 class ProcessConfig(PropertyHolder):
     current_value = FloatProperty(title="Process Variable", default=0)
     set_point = FloatProperty(title="Set Point", default=0)
+    annotation = StringProperty(title="Annotation", default='')
 
 
 class GainConfig(PropertyHolder):
