@@ -1,8 +1,9 @@
+import datetime
+
 from nio.block.base import Block
 from nio.properties import VersionProperty, Property, FloatProperty, \
                            PropertyHolder, ObjectProperty
 from nio.signal.base import Signal
-import datetime
 
 
 class ProcessConfig(PropertyHolder):
