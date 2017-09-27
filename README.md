@@ -1,9 +1,38 @@
 PID
 ===
-A NIO Block that creates a discretized [PID](https://en.wikipedia.org/wiki/PID_controller) Controlled output from a list of incoming signals.
+Creates a discretized PID Controlled output from a list of incoming signals.
 
 Properties
 ----------
+- **gain_config**: Gains of the PID Controller
+- **process_config**: Process Variable and Set Point for the controller
+
+Inputs
+------
+- **default**: 
+
+Outputs
+-------
+- **value**: Calculated control output from the PID controller
+
+Commands
+--------
+None
+
+Dependencies
+------------
+None
+
+Input
+-----
+- **default**: Any list of signals.
+
+Output
+------
+- **value**: Float, Calculated control output from the PID controller.
+
+Property Details
+----------------
 - **Process Variable** : Signal to be controlled, compared with Set Point.
 - **Set Point** : Value to compare with Process Variable.
 - **Propertional Gain** : Float, Proprtional Gain of the Controller (kp)
@@ -12,18 +41,3 @@ Properties
 - **Integrator Max** : Float, Maximum Integrator to be applied to prevent [Integral Windup](https://en.wikipedia.org/wiki/Integral_windup)
 - **Integrator Min** : Float, Minimum Integrator to be applied to prevent Integral Windup
 
-Input
--------
-- **default**: Any list of signals.
-
-Output
----------
-- **value**: Float, Calculated control output from the PID controller.
-
-Dependencies
-----------------
-None
-
-Commands
-----------------
-None

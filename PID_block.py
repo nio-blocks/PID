@@ -53,7 +53,8 @@ class PID(Block):
             # First signal has dt==0 so:
             if self.last_time:
                 # Find time for Integral and Derivator error Calculations
-                dt = (datetime.datetime.utcnow()-self.last_time).total_seconds()
+                dt = (
+                    datetime.datetime.utcnow()-self.last_time).total_seconds()
                 self.logger.debug('dt {}'.format(dt))
 
                 # Calculation for Derivative Gain, Derivator==Previous Error
