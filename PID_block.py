@@ -6,14 +6,14 @@ import datetime
 
 
 class ProcessConfig(PropertyHolder):
-    current_value = FloatProperty(title="Process Variable", default=0)
-    set_point = FloatProperty(title="Set Point", default=0)
+    current_value = FloatProperty(title="Process Variable", default=0.0)
+    set_point = FloatProperty(title="Set Point", default=0.0)
 
 
 class GainConfig(PropertyHolder):
-    kp = FloatProperty(title="Proportional Gain", default=0)
-    ki = FloatProperty(title="Integral Gain", default=0)
-    kd = FloatProperty(title="Derivative Gain", default=0)
+    kp = FloatProperty(title="Proportional Gain", default=0.0)
+    ki = FloatProperty(title="Integral Gain", default=0.0)
+    kd = FloatProperty(title="Derivative Gain", default=0.0)
     integrator_max = Property(title="Maximum Integrator",
                               default=None, allow_none=True)
     integrator_min = Property(title="Minimum Integrator",
