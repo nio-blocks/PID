@@ -1,40 +1,40 @@
 {
-  "namespace/BlockName": {
-    "version": "1.0.0",
-    "description": "Description of the block.",
+  "nio/PID": {
+    "version": "0.1.0",
+    "description": "A NIO Block that creates a discretized PID Controlled output from a list of incoming signals.",
     "properties": {
-      "<property1>": {
-        "description": "Required description of the property"
+      "Process Variable": {
+        "description": "Signal to be controlled, compared with Set Point."
       },
-      "<property2>": {
-        "default": "Optional metadata with any key.",
-        "description": "Required description of the property"
+      "Set Point": {
+        "description": "Value to compare with Process Variable."
+      },
+      "Proportional Gain": {
+        "description": "Proprtional Gain of the Controller (kp)"
+      },
+      "Integral Gain": {
+        "description": "Integral Gain of the Controller (ki)"
+      },
+      "Derivative Gain": {
+        "description": "Derivative Gain of the Controller (kd)"
+      },
+      "Integrator Max": {
+        "description": "Maximum Integrator to be applied to prevent Integral Windup"
+      },
+      "Process Variable": {
+        "description": "Minimum Integrator to be applied to prevent Integral Windup"
       }
     },
     "inputs": {
-      "<input1 | default>": {
-        "description": "Required description of the input",
-      },
-      "<input2>": {
-        "description": "Required description of the input"
+      "default": {
+        "description": "",
       }
     },
     "outputs": {
-      "<output1 | default>": {
-        "description": "Required description of the output",
-      },
-      "<output2>": {
-        "description": "Required description of the output"
+      "value": {
+        "description": "Calculated control output from the PID controller.",
       }
     },
-    "commands": {
-      "<command1>": {
-        "description": "Required description of the command",
-        "type": "Optional type and other metadata with any key."
-      },
-      "<command2>": {
-        "description": "Required description of the command"
-      }
-    }
+    "commands": {}
   }
 }
