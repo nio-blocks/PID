@@ -2,6 +2,9 @@
   "nio/PID": {
     "version": "0.1.0",
     "description": "Creates a discretized PID Controlled output from a list of incoming signals.",
+    "categories": [
+      "Signal Inspection"
+    ],
     "properties": {
       "gain_config": {
         "title": "Gain Values",
