@@ -1,38 +1,29 @@
 {
   "nio/PID": {
     "version": "0.1.0",
-    "description": "A NIO Block that creates a discretized PID Controlled output from a list of incoming signals.",
+    "description": "Creates a discretized PID Controlled output from a list of incoming signals.",
     "properties": {
-      "Process Variable": {
-        "description": "Signal to be controlled, compared with Set Point."
+      "gain_config": {
+        "title": "Gain Values",
+        "type": "ObjectType",
+        "description": "Gains of the PID Controller",
+        "default": 0.0
       },
-      "Set Point": {
-        "description": "Value to compare with Process Variable."
-      },
-      "Proportional Gain": {
-        "description": "Proprtional Gain of the Controller (kp)"
-      },
-      "Integral Gain": {
-        "description": "Integral Gain of the Controller (ki)"
-      },
-      "Derivative Gain": {
-        "description": "Derivative Gain of the Controller (kd)"
-      },
-      "Integrator Max": {
-        "description": "Maximum Integrator to be applied to prevent Integral Windup"
-      },
-      "Process Variable": {
-        "description": "Minimum Integrator to be applied to prevent Integral Windup"
+      "process_config": {
+        "title": "Process Variable Setup",
+        "type": "ObjectType",
+        "description": "Process Variable and Set Point for the controller",
+        "default": 0.0
       }
     },
     "inputs": {
       "default": {
-        "description": "",
+        "description": ""
       }
     },
     "outputs": {
       "value": {
-        "description": "Calculated control output from the PID controller.",
+        "description": "Calculated control output from the PID controller"
       }
     },
     "commands": {}
