@@ -2,7 +2,7 @@ from nio.block.terminals import DEFAULT_TERMINAL
 from nio.signal.base import Signal
 from nio.testing.block_test_case import NIOBlockTestCase
 from unittest.mock import MagicMock, ANY
-from PID_block import PID
+from ..PID_block import PID
 
 
 class TestPID(NIOBlockTestCase):
