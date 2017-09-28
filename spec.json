@@ -10,13 +10,13 @@
         "title": "Gain Values",
         "type": "ObjectType",
         "description": "Gains of the PID Controller",
-        "default": 0.0
+        "default": 0
       },
       "process_config": {
         "title": "Process Variable Setup",
         "type": "ObjectType",
         "description": "Process Variable and Set Point for the controller",
-        "default": 0.0
+        "default": 0
       }
     },
     "inputs": {
