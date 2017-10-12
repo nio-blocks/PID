@@ -7,7 +7,7 @@ from ..PID_block import PID
 
 class TestPID(NIOBlockTestCase):
 
-    def test_onesignal_ponly(self):
+    def test_onesignal_only(self):
         blk = PID()
         self.configure_block(
             blk,
@@ -65,8 +65,8 @@ class TestPID(NIOBlockTestCase):
                                      })])
 
         blk.stop()
-        self.assert_num_signals_notified(2)
+        self.assert_num_signals_notified(1)
         print([n.to_dict() for n in self.last_notified[DEFAULT_TERMINAL]])
-        self.assertFalse(
-            self.last_notified[DEFAULT_TERMINAL][0].to_dict() ==
-            self.last_notified[DEFAULT_TERMINAL][1].to_dict())
+        self.assertDictEqual(
+            self.last_notified[DEFAULT_TERMINAL][0].to_dict(),
+                {'value': ANY})
