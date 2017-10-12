@@ -1,8 +1,8 @@
+import datetime
 from nio.block.base import Block
 from nio.properties import VersionProperty, Property, FloatProperty, \
                            PropertyHolder, ObjectProperty
 from nio.signal.base import Signal
-import datetime
 from nio.block.mixins.enrich.enrich_signals import EnrichSignals
 
 
@@ -23,7 +23,7 @@ class GainConfig(PropertyHolder):
 
 class PID(EnrichSignals, Block):
 
-    version = VersionProperty('0.1.0')
+    version = VersionProperty("0.1.0")
     process_config = ObjectProperty(
         ProcessConfig, title="Process Variable Setup", default=ProcessConfig())
     gain_config = ObjectProperty(
@@ -54,7 +54,8 @@ class PID(EnrichSignals, Block):
             # First signal has dt==0 so:
             if self.last_time:
                 # Find time for Integral and Derivator error Calculations
-                dt = (datetime.datetime.utcnow()-self.last_time).total_seconds()
+                dt = (
+                    datetime.datetime.utcnow()-self.last_time).total_seconds()
                 self.logger.debug('dt {}'.format(dt))
 
                 # Calculation for Derivative Gain, Derivator==Previous Error

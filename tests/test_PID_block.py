@@ -9,10 +9,13 @@ class TestPID(NIOBlockTestCase):
 
     def test_onesignal_only(self):
         blk = PID()
-        self.configure_block(blk, {'process_config':
-                                        {'set_point': 9, 'current_value': 5},
-                                   'gain_config':
-                                        {'kp': 1, 'ki': 2, 'kd': 3}})
+        self.configure_block(
+            blk,
+            {
+                'process_config': {'set_point': 9, 'current_value': 5},
+                'gain_config': {'kp': 1, 'ki': 2, 'kd': 3}
+            }
+        )
         blk.start()
         blk.process_signals([Signal()])
         blk.stop()
@@ -31,16 +34,18 @@ class TestPID(NIOBlockTestCase):
         kd = 3
         imax = -150
         imin = None
-        self.configure_block(blk, {'process_config':
-                                        {'set_point': '{{$sp}}',
-                                         'current_value': '{{$value}}'},
-                                   'gain_config':
-                                        {'kp': '{{$kp}}',
-                                         'ki': '{{$ki}}',
-                                         'kd': '{{$kd}}',
-                                         'integrator_max': '{{$imax}}',
-                                         'integrator_min': '{{$imin}}'
-                                         }})
+        self.configure_block(
+            blk,
+            {
+                'process_config': {'set_point': '{{$sp}}',
+                                   'current_value': '{{$value}}'},
+                'gain_config': {'kp': '{{$kp}}',
+                                'ki': '{{$ki}}',
+                                'kd': '{{$kd}}',
+                                'integrator_max': '{{$imax}}',
+                                'integrator_min': '{{$imin}}'}
+            }
+        )
         blk.start()
         blk.process_signals([Signal({'value': pv,
                                      'sp': setp,
