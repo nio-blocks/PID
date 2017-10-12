@@ -3,6 +3,7 @@ from nio.properties import VersionProperty, Property, FloatProperty, \
                            PropertyHolder, ObjectProperty
 from nio.signal.base import Signal
 import datetime
+from nio.block.mixins.enrich.enrich_signals import EnrichSignals
 
 
 class ProcessConfig(PropertyHolder):
@@ -20,7 +21,7 @@ class GainConfig(PropertyHolder):
                               default=None, allow_none=True)
 
 
-class PID(Block):
+class PID(EnrichSignals, Block):
 
     version = VersionProperty('0.1.0')
     process_config = ObjectProperty(
@@ -82,5 +83,5 @@ class PID(Block):
             self.logger.debug('last_time {}'.format(self.last_time))
             # Final Math: Addition of all terms
             pid = self.p_value + self.i_value + self.d_value
-            new_signals.append(Signal({'value': pid}))
+            new_signals = self.get_output_signal({'value': pid}, signal)
         self.notify_signals(new_signals)
