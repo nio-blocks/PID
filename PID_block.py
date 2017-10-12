@@ -23,7 +23,7 @@ class GainConfig(PropertyHolder):
 
 class PID(EnrichSignals, Block):
 
-    version = VersionProperty("0.1.0")
+    version = VersionProperty("0.1.1")
     process_config = ObjectProperty(
         ProcessConfig, title="Process Variable Setup", default=ProcessConfig())
     gain_config = ObjectProperty(
