@@ -9,7 +9,7 @@ Properties
 
 Inputs
 ------
-- **default**: 
+- **default**: Anly list of signals 
 
 Outputs
 -------
@@ -22,14 +22,6 @@ None
 Dependencies
 ------------
 None
-
-Input
------
-- **default**: Any list of signals.
-
-Output
-------
-- **value**: Float, Calculated control output from the PID controller.
 
 Property Details
 ----------------
