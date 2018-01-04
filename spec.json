@@ -3,30 +3,31 @@
     "version": "0.1.1",
     "description": "Creates a discretized PID Controlled output from a list of incoming signals.",
     "categories": [
-      "Signal Inspection"
+      "Signal Inspection",
+      "Machine Learning"
     ],
     "properties": {
       "gain_config": {
         "title": "Gain Values",
         "type": "ObjectType",
-        "description": "Gains of the PID Controller",
+        "description": "Configurable gains of the PID Controller.",
         "default": 0
       },
       "process_config": {
         "title": "Process Variable Setup",
         "type": "ObjectType",
-        "description": "Process Variable and Set Point for the controller",
+        "description": "Process Variable and Set Point for the controller.",
         "default": 0
       }
     },
     "inputs": {
       "default": {
-        "description": ""
+        "description": "Any list of signals."
       }
     },
     "outputs": {
       "value": {
-        "description": "Calculated control output from the PID controller"
+        "description": "Calculated control output from the PID controller."
       }
     },
     "commands": {}

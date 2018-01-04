@@ -4,16 +4,16 @@ Creates a discretized PID Controlled output from a list of incoming signals.
 
 Properties
 ----------
-- **gain_config**: Gains of the PID Controller
-- **process_config**: Process Variable and Set Point for the controller
+- **gain_config**: Configurable gains of the PID Controller.
+- **process_config**: Process Variable and Set Point for the controller.
 
 Inputs
 ------
-- **default**: Anly list of signals 
+- **default**: Any list of signals.
 
 Outputs
 -------
-- **value**: Calculated control output from the PID controller
+- **value**: Calculated control output from the PID controller.
 
 Commands
 --------
