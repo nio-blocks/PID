@@ -1,6 +1,6 @@
 {
   "nio/PID": {
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Creates a discretized PID Controlled output from a list of incoming signals.",
     "categories": [
       "Signal Inspection",
